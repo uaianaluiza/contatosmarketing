@@ -23,9 +23,10 @@ public class ContatoService {
         }
     }
 
-    public void cadastrarContato(Contato contato) {
+    public Contato cadastrarContato(Contato contato) {
         if (!verificarEmailJaCadastrado(contato.getEmail())) ;
         contatoRepository.save(contato);
+        return contato;
     }
 
     public Contato buscarContatoPorEmail(String email) {
