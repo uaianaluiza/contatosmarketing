@@ -26,12 +26,9 @@ public class ContatoService {
 
     public Contato cadastrarContato(Contato contato) {
         Contato objetoContato = verificarEmailJaCadastrado(contato.getEmail());
-        try {
             Contato obj = contatoRepository.save(contato);
             return contato;
-        }catch (Exception error){
-            throw new ContatoDuplicadoException();
-        }
+
     }
 
     public Contato buscarContatoPorEmail(String email) {

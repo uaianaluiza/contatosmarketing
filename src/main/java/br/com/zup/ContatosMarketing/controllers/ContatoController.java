@@ -22,4 +22,9 @@ public class ContatoController {
         return contato;
     }
 
+    @GetMapping("{email}/")
+    public Contato buscarContatoPorEmail(@PathVariable String email){
+        return contatoService.buscarContatoPorEmail(email);
+    }
+
 }
