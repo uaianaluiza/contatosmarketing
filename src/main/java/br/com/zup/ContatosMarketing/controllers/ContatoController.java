@@ -27,4 +27,13 @@ public class ContatoController {
         return contatoService.buscarContatoPorEmail(email);
     }
 
+    @GetMapping
+    public Iterable<Contato> listarContatos(){
+        return contatoService.verTodosOsContatos();
+    }
+
+    @DeleteMapping("{email}/")
+    public void deletarContatoPeloEmail(@PathVariable String email) {
+        contatoService.deletarContato(email);
+    }
 }

@@ -21,13 +21,16 @@ public class ContatoService {
         if(optionalContato.isPresent()){
             return optionalContato.get();
         }
-        throw new ContatoDuplicadoException();
+        throw new RuntimeException("Email já cadastrado");
     }
 
     public Contato cadastrarContato(Contato contato) {
-        Contato objetoContato = verificarEmailJaCadastrado(contato.getEmail());
-            Contato obj = contatoRepository.save(contato);
-            return contato;
+            try {
+                Contato objContato = contatoRepository.save(contato);
+                return contato;
+            }catch (Exception error){
+                throw new RuntimeException("Já existe um contato com este e-mail");
+            }
 
     }
 
@@ -40,7 +43,7 @@ public class ContatoService {
         throw new ContatoNaoCadastradoException();
     }
 
-    public Iterable<Contato> verTodosOsContatos(Contato contato){
+    public Iterable<Contato> verTodosOsContatos(){
         Iterable<Contato> contatos = contatoRepository.findAll();
         return contatos;
     }
