@@ -1,5 +1,6 @@
 package br.com.zup.ContatosMarketing.services;
 
+import br.com.zup.ContatosMarketing.exceptions.ContatoDuplicadoException;
 import br.com.zup.ContatosMarketing.exceptions.ContatoNaoCadastradoException;
 import br.com.zup.ContatosMarketing.models.Contato;
 import br.com.zup.ContatosMarketing.repositories.ContatoRepository;
@@ -14,19 +15,23 @@ public class ContatoService {
     @Autowired
     private ContatoRepository contatoRepository;
 
-    public boolean verificarEmailJaCadastrado(String email) {
-        Optional<Contato> contato = contatoRepository.findById(email);
-        if ( contato.isPresent() ) {
-            return true;
-        } else {
-            throw new ContatoNaoCadastradoException();
+    public Contato verificarEmailJaCadastrado(String email) {
+        Optional<Contato> optionalContato = contatoRepository.findById(email);
+
+        if(optionalContato.isPresent()){
+            return optionalContato.get();
         }
+        throw new ContatoDuplicadoException();
     }
 
     public Contato cadastrarContato(Contato contato) {
-        if (!verificarEmailJaCadastrado(contato.getEmail())) ;
-        contatoRepository.save(contato);
-        return contato;
+        Contato objetoContato = verificarEmailJaCadastrado(contato.getEmail());
+        try {
+            Contato obj = contatoRepository.save(contato);
+            return contato;
+        }catch (Exception error){
+            throw new ContatoDuplicadoException();
+        }
     }
 
     public Contato buscarContatoPorEmail(String email) {
@@ -45,4 +50,5 @@ public class ContatoService {
     public void deletarContato(String email){
         contatoRepository.deleteById(email);
     }
+
 }

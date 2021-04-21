@@ -2,6 +2,7 @@ package br.com.zup.ContatosMarketing.DTOs;
 
 import br.com.zup.ContatosMarketing.models.Contato;
 
+import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -15,6 +16,7 @@ public class CadastroContatoDTO {
     @NotBlank()
     @NotEmpty
     @Email
+    @Id
     private String email;
     @NotBlank()
     @NotEmpty

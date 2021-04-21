@@ -1,13 +1,10 @@
 package br.com.zup.ContatosMarketing.controllers;
 
-import br.com.zup.ContatosMarketing.DTOs.CadastroContatoDTO;
 import br.com.zup.ContatosMarketing.models.Contato;
 import br.com.zup.ContatosMarketing.services.ContatoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -19,9 +16,10 @@ public class ContatoController {
     public ContatoService contatoService;
 
     @PostMapping("/")
-    public Contato cadastrarContato(@RequestBody @Valid CadastroContatoDTO contatoDTO){
-        Contato contato = contatoDTO.converterDTOparaModel();
-        return contatoService.cadastrarContato(contato);
+    @ResponseStatus(HttpStatus.CREATED)
+    public Contato cadastrarContato(@RequestBody @Valid Contato contato){
+        contatoService.cadastrarContato(contato);
+        return contato;
     }
 
 }

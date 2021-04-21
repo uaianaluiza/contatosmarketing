@@ -14,9 +14,6 @@ public class CategoriaDTO {
     @Size(min = 3,message = "Nome da categoria deve ter no mínimo 3 caracteres")
     private String nome;
 
-    @ManyToMany
-    private List<ProdutoDTO> produtos;
-
     public String getNome() {
         return nome;
     }
