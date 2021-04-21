@@ -1,9 +1,6 @@
 package br.com.zup.ContatosMarketing.models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -11,10 +8,9 @@ import java.util.List;
 
 public class Produto {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
     private String nome;
-
-    @ManyToMany
-    private List<Categoria> categorias;
 
     public Produto(){
     }
@@ -25,5 +21,13 @@ public class Produto {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

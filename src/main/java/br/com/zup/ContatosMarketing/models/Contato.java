@@ -13,9 +13,6 @@ public class Contato {
     private String email;
     private int telefone;
 
-    @ManyToMany
-    private List<Produto> produtos;
-
     public Contato() {
     }
 
@@ -43,13 +40,6 @@ public class Contato {
         this.telefone = telefone;
     }
 
-    public List<Produto> getProdutos() {
-        return produtos;
-    }
-
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
-    }
 }
 
 

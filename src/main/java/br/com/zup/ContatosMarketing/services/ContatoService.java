@@ -1,5 +1,6 @@
 package br.com.zup.ContatosMarketing.services;
 
+import br.com.zup.ContatosMarketing.exceptions.ContatoDuplicadoException;
 import br.com.zup.ContatosMarketing.exceptions.ContatoNaoCadastradoException;
 import br.com.zup.ContatosMarketing.models.Contato;
 import br.com.zup.ContatosMarketing.repositories.ContatoRepository;
@@ -14,18 +15,23 @@ public class ContatoService {
     @Autowired
     private ContatoRepository contatoRepository;
 
-    public boolean verificarEmailJaCadastrado(String email) {
-        Optional<Contato> contato = contatoRepository.findById(email);
-        if ( contato.isPresent() ) {
-            return true;
-        } else {
-            throw new ContatoNaoCadastradoException();
+    public Contato verificarEmailJaCadastrado(String email) {
+        Optional<Contato> optionalContato = contatoRepository.findById(email);
+
+        if(optionalContato.isPresent()){
+            return optionalContato.get();
         }
+        throw new RuntimeException("Email já cadastrado");
     }
 
-    public void cadastrarContato(Contato contato) {
-        if (!verificarEmailJaCadastrado(contato.getEmail())) ;
-        contatoRepository.save(contato);
+    public Contato cadastrarContato(Contato contato) {
+            try {
+                Contato objContato = contatoRepository.save(contato);
+                return contato;
+            }catch (Exception error){
+                throw new RuntimeException("Já existe um contato com este e-mail");
+            }
+
     }
 
     public Contato buscarContatoPorEmail(String email) {
@@ -37,11 +43,12 @@ public class ContatoService {
         throw new ContatoNaoCadastradoException();
     }
 
-    public Iterable<Contato> verTodosOsContatos(Contato contato){
+    public Iterable<Contato> verTodosOsContatos(){
         Iterable<Contato> contatos = contatoRepository.findAll();
         return contatos;
     }
     public void deletarContato(String email){
         contatoRepository.deleteById(email);
     }
+
 }
