@@ -1,5 +1,7 @@
 package br.com.zup.ContatosMarketing.services;
 
+import br.com.zup.ContatosMarketing.exceptions.CategoriaJaCadastradaException;
+import br.com.zup.ContatosMarketing.exceptions.CategoriaNaoExisteException;
 import br.com.zup.ContatosMarketing.models.Categoria;
 import br.com.zup.ContatosMarketing.models.Contato;
 import br.com.zup.ContatosMarketing.repositories.CategoriaRepository;
@@ -24,7 +26,7 @@ public class CategoriaService {
             Categoria obj = categoriaRepository.save(categoria);
             return categoria;
         }catch (Exception error){
-            throw new  RuntimeException("Categoria já cadastrado");
+            throw new CategoriaJaCadastradaException();
         }
     }
 
@@ -34,7 +36,7 @@ public class CategoriaService {
         if ( optionalCategoria.isPresent()){
             return optionalCategoria.get();
         }
-        throw new RuntimeException("Categoria não existe");
+        throw new CategoriaNaoExisteException();
     }
 
     public List<Categoria> visualizarTodasAsCategorias(){
