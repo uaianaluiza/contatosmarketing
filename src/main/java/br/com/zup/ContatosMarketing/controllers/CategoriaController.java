@@ -19,4 +19,11 @@ public class CategoriaController {
     public Categoria registrarCategoria(@RequestBody Categoria categoria) {
         return categoriaService.cadastrarCategoria(categoria);
     }
+
+    @GetMapping("{nome}/")
+    public Categoria buscarCategoriaPeloNome(@PathVariable String nome) {
+        return categoriaService.buscarCategoriaPeloNome(nome);
+    }
+
+
 }

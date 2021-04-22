@@ -5,6 +5,8 @@ import br.com.zup.ContatosMarketing.repositories.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CategoriaService {
 
@@ -18,5 +20,14 @@ public class CategoriaService {
         }catch (Exception error){
             throw new  RuntimeException("Categoria já cadastrado");
         }
+    }
+
+    public Categoria buscarCategoriaPeloNome(String nome){
+        Optional<Categoria> optionalCategoria = categoriaRepository.findById(nome);
+
+        if ( optionalCategoria.isPresent()){
+            return optionalCategoria.get();
+        }
+        throw new RuntimeException("Categoria não existe");
     }
 }
