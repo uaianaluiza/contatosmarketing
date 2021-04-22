@@ -36,4 +36,7 @@ public class CategoriaController {
     public void deletarCategoria( @PathVariable String nome){
         categoriaService.deletarCategoriaPeloNome(nome);
     }
+
+
+
 }

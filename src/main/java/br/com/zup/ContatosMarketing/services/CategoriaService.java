@@ -1,7 +1,9 @@
 package br.com.zup.ContatosMarketing.services;
 
 import br.com.zup.ContatosMarketing.models.Categoria;
+import br.com.zup.ContatosMarketing.models.Contato;
 import br.com.zup.ContatosMarketing.repositories.CategoriaRepository;
+import br.com.zup.ContatosMarketing.repositories.ContatoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,9 @@ public class CategoriaService {
 
     @Autowired
     private CategoriaRepository categoriaRepository;
+
+    @Autowired
+    private ContatoRepository contatoRepository;
 
     public Categoria cadastrarCategoria (Categoria categoria){
         try{
@@ -40,4 +45,10 @@ public class CategoriaService {
     public void deletarCategoriaPeloNome(String nome){
        categoriaRepository.deleteById(nome);
     }
+
+
+
+
+
+
 }

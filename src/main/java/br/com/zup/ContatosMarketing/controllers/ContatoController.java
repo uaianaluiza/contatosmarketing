@@ -1,9 +1,10 @@
 package br.com.zup.ContatosMarketing.controllers;
 
+import br.com.zup.ContatosMarketing.DTOs.CadastroContatoDTO;
+import br.com.zup.ContatosMarketing.models.Categoria;
 import br.com.zup.ContatosMarketing.models.Contato;
 import br.com.zup.ContatosMarketing.services.ContatoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,9 +20,8 @@ public class ContatoController {
 
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
-    public Contato cadastrarContato(@RequestBody @Valid Contato contato){
-        contatoService.cadastrarContato(contato);
-        return contato;
+    public Contato cadastrarContato(@RequestBody @Valid CadastroContatoDTO contatoDTO){
+        return contatoService.cadastrarContato(contatoDTO.converterDTOparaModel());
     }
 
     @GetMapping("{email}/")
@@ -39,8 +39,16 @@ public class ContatoController {
         contatoService.deletarContato(email);
     }
 
-    @GetMapping("/produto")
-    public List<Contato> listarContatosPeloProduto(@RequestParam String nome){
-        return contatoService.buscarContatosPorProduto(nome);
+
+    @GetMapping("/categoria")
+    public List<Contato> verContatosPelaCategoria(@RequestParam String nome){
+        return contatoService.listarContatosPelaCategoria(nome);
     }
+
+    @GetMapping("/produto")
+    public List<Contato> verContatosPeloProduto(@RequestParam String nome){
+        return contatoService.pesquisarContatoPorProduto(nome);
+    }
+
+
 }

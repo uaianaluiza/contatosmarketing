@@ -1,7 +1,7 @@
 package br.com.zup.ContatosMarketing.models;
 
 import javax.persistence.*;
-import java.util.List;
+
 
 @Entity
 @Table(name = "categorias")

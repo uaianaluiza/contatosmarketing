@@ -7,6 +7,7 @@ import br.com.zup.ContatosMarketing.repositories.ContatoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +20,7 @@ public class ContatoService {
     @Autowired
     private ProdutoService produtoService;
 
+
     public Contato verificarEmailJaCadastrado(String email) {
         Optional<Contato> optionalContato = contatoRepository.findById(email);
 
@@ -30,12 +32,21 @@ public class ContatoService {
 
     public Contato cadastrarContato(Contato contato) {
             try {
+                contato.setProdutos(recuperarProdutosSalvos(contato.getProdutos()));
                 Contato objContato = contatoRepository.save(contato);
                 return contato;
             }catch (Exception error){
                 throw new RuntimeException("Já existe um contato com este e-mail");
             }
+    }
 
+    private List<Produto> recuperarProdutosSalvos(List<Produto> produtos){
+        List<Produto> produtosSalvos = new ArrayList<>();
+        for (Produto item: produtos ){
+            produtosSalvos.add(
+                    produtoService.buscarProdutoPeloNome(item.getNome()));
+        }
+        return produtosSalvos;
     }
 
     public Contato buscarContatoPorEmail(String email) {
@@ -55,11 +66,16 @@ public class ContatoService {
         contatoRepository.deleteById(email);
     }
 
-    public List<Contato> buscarContatosPorProduto(String nome){
-        Produto produto = produtoService.buscarProdutoPeloNme(nome);
-        return produto.getContatos();
+    public List<Contato> listarContatosPelaCategoria(String nome) {
+        System.out.println(nome);
+        List<Contato> contatos = contatoRepository.findAllByProdutosCategoriasNomeContains(nome);
+        System.out.println(contatos);
+        return contatos;
     }
 
-
+    public List<Contato> pesquisarContatoPorProduto(String nome){
+        List<Contato> contatos = contatoRepository.findAllByProdutosNome(nome);
+        return contatos;
+    }
 
 }
