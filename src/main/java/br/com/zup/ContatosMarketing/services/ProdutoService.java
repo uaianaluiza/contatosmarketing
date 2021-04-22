@@ -36,4 +36,8 @@ public class ProdutoService {
         }
         throw new RuntimeException("Produto não existe");
     }
+
+    public void deletarProdutoPeloId(int id){
+        produtoRepository.deleteById(id);
+    }
 }
