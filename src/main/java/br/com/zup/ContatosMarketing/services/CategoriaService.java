@@ -5,6 +5,7 @@ import br.com.zup.ContatosMarketing.repositories.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,5 +30,14 @@ public class CategoriaService {
             return optionalCategoria.get();
         }
         throw new RuntimeException("Categoria não existe");
+    }
+
+    public List<Categoria> visualizarTodasAsCategorias(){
+        List<Categoria> categorias = (List<Categoria>) categoriaRepository.findAll();
+        return categorias;
+    }
+
+    public void deletarCategoriaPeloNome(String nome){
+       categoriaRepository.deleteById(nome);
     }
 }
