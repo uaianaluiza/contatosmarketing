@@ -5,6 +5,8 @@ import br.com.zup.ContatosMarketing.repositories.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProdutoService {
 
@@ -18,5 +20,10 @@ public class ProdutoService {
         }catch (Exception error){
            throw new  RuntimeException("Produto já cadastrado");
         }
+    }
+
+    public List<Produto> mostrarTodosOsProdutos(){
+        List<Produto> produtos = (List<Produto>) produtoRepository.findAll();
+        return produtos;
     }
 }
