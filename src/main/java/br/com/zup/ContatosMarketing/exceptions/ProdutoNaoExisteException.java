@@ -2,7 +2,7 @@ package br.com.zup.ContatosMarketing.exceptions;
 
 public class ProdutoNaoExisteException extends RuntimeException{
     private Integer status = 400;
-    private String tipoDeErro = "Produto não cadastrado!";
+    private String tipoDeErro = "Produto não cadastrado";
     private String motivo = "BAD REQUEST";
 
     public ProdutoNaoExisteException() {

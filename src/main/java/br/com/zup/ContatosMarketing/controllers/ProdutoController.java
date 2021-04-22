@@ -18,6 +18,7 @@ public class ProdutoController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Produto registrarProduto(@RequestBody Produto produto) {
+
         return produtoService.cadastrarProduto(produto);
     }
 
