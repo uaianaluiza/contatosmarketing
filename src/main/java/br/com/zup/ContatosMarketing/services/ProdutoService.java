@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProdutoService {
@@ -25,5 +26,14 @@ public class ProdutoService {
     public List<Produto> mostrarTodosOsProdutos(){
         List<Produto> produtos = (List<Produto>) produtoRepository.findAll();
         return produtos;
+    }
+
+    public Produto buscarProdutoPeloId(int id){
+        Optional<Produto> optionalProduto = produtoRepository.findById(id);
+
+        if ( optionalProduto.isPresent()){
+            return optionalProduto.get();
+        }
+        throw new RuntimeException("Produto não existe");
     }
 }
