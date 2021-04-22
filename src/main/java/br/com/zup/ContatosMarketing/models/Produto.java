@@ -12,8 +12,19 @@ public class Produto {
     private int id;
     private String nome;
 
+    @ManyToMany
+    @JoinTable(name = "contatos_produtos",joinColumns = {@JoinColumn (name = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "email")})
+    private List<Contato> contatos;
+
+    @ManyToMany
+    @JoinTable(name = "categorias_produtos",joinColumns = {@JoinColumn (name = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "nome")})
+    private List<Categoria> categorias;
+
     public Produto(){
     }
+
 
     public String getNome() {
         return nome;
@@ -29,5 +40,21 @@ public class Produto {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public List<Contato> getContatos() {
+        return contatos;
+    }
+
+    public void setContatos(List<Contato> contatos) {
+        this.contatos = contatos;
+    }
+
+    public List<Categoria> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
     }
 }

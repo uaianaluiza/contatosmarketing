@@ -37,7 +37,17 @@ public class ProdutoService {
         throw new RuntimeException("Produto não existe");
     }
 
+    public Produto buscarProdutoPeloNme(String nome){
+        Optional<Produto> optionalProduto = produtoRepository.findByNome(nome);
+
+        if ( optionalProduto.isPresent()){
+            return optionalProduto.get();
+        }
+        throw new RuntimeException("Produto não existe");
+    }
     public void deletarProdutoPeloId(int id){
         produtoRepository.deleteById(id);
     }
+
+
 }
