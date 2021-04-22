@@ -1,12 +1,12 @@
 package br.com.zup.ContatosMarketing.DTOs;
 
 import br.com.zup.ContatosMarketing.models.Contato;
+import br.com.zup.ContatosMarketing.models.Produto;
 
 import javax.persistence.Id;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CadastroContatoDTO {
     @NotBlank()
@@ -18,9 +18,13 @@ public class CadastroContatoDTO {
     @Email
     @Id
     private String email;
-    @NotBlank()
-    @NotEmpty
+    @NotNull
     private int telefone;
+    private List<String> produtos;
+
+    public CadastroContatoDTO(){
+
+    }
 
     public String getNomeCompleto() {
         return nomeCompleto;
@@ -46,11 +50,27 @@ public class CadastroContatoDTO {
         this.telefone = telefone;
     }
 
+    public List<String> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<String> produtos) {
+        this.produtos = produtos;
+    }
+
     public Contato converterDTOparaModel(){
         Contato contato = new Contato();
         contato.setEmail(this.email);
         contato.setNomeCompleto(this.nomeCompleto);
         contato.setTelefone(this.telefone);
+        List<Produto> listaDeProdutos = new ArrayList<>();
+        for(String nome: produtos){
+            Produto produto = new Produto();
+            produto.setNome(nome);
+            listaDeProdutos.add(produto);
+        }
+        contato.setProdutos(listaDeProdutos);
+
 
         return contato;
     }

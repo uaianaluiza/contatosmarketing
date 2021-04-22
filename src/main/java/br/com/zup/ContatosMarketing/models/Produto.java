@@ -12,8 +12,12 @@ public class Produto {
     private int id;
     private String nome;
 
+    @ManyToMany
+    private List<Categoria> categorias;
+
     public Produto(){
     }
+
 
     public String getNome() {
         return nome;
@@ -29,5 +33,13 @@ public class Produto {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public List<Categoria> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
     }
 }
